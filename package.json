@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build-old": "babel src -d dist --copy-files",
     "dev": "parcel src/index.html",
-    "build": "parcel build src/index.html"
+    "build": "parcel build src/index.html",
+    "netlify-build": "parcel build src/index.html"
   },
   "repository": {
     "type": "git",
