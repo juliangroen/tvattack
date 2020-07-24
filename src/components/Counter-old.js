@@ -1,8 +1,12 @@
-import Component from '../lib/Component';
+import Observer from '../lib/Observer';
 
-class Counter extends Component {
+class Counter extends Observer {
     constructor(state, selector) {
-        super(state, selector);
+        super();
+
+        this.appState = state;
+        this.selector = selector;
+
     }
 
     markup(state) {
@@ -11,6 +15,17 @@ class Counter extends Component {
             <button id="incButton">Increase</button>
             <button id="decButton">Decrease</button>
         `;
+    }
+
+    render(state, selector) {
+        const markup = this.markup(state);
+        const target = document.getElementById(selector);
+        target.innerHTML = markup;
+        this.bindEvents();
+    }
+
+    update() {
+        this.render(this.appState.getState(), this.selector);
     }
 
     attach() {
