@@ -5,6 +5,7 @@ class Component extends Observer {
         super()
         this.appState = state;
         this.selector = selector;
+        this.attach();
     }
 
     markup(state) {
@@ -23,7 +24,7 @@ class Component extends Observer {
     }
 
     attach() {
-        this.update();
+        //this.update();
     }
 
     bindEvents() {

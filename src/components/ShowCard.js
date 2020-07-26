@@ -1,21 +1,22 @@
 import Component from '../lib/Component';
-import Requests from '../lib/Requests';
+import fetchShow from '../lib/Requests';
 
 class ShowCard extends Component {
 
     markup(state) {
-        //return `${state.testShow}`;
-        return ``;
+        let show = state.show;
+        let name = show.name;
+        return `${name}`;
     }
 
     attach() {
-        this.update();
+        fetchShow("1121").then(data => {
+            const show = {show: data};
+            this.appState.setState(show);
+        }).catch(e => {
+            console.log(e);
+        })
     }
-
-   // async getData() {
-   //     const show = await Requests.fetchShow("1121");
-   //     this.appState.setState({...this.appState, testShow: show});
-   // }
 
 }
 

@@ -8,5 +8,5 @@ const firstCard = new ShowCard($state, "show-card");
 
 $state.addObserver(TotalCounter);
 $state.addObserver(firstCard);
-TotalCounter.attach();
-firstCard.attach();
+TotalCounter.update();
+firstCard.update();

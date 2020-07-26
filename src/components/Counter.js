@@ -14,7 +14,7 @@ class Counter extends Component {
     }
 
     attach() {
-        this.appState.setState({...this.appState, totalValue: 0});
+        this.appState.setState({totalValue: 0});
         this.update();
     }
 
