@@ -1,4 +1,5 @@
 import Component from '../lib/Component';
+import fetchShow from '../lib/Requests';
 
 class ShowCard extends Component {
     init() {
@@ -26,8 +27,10 @@ class ShowCard extends Component {
 
     displaySearch() {
         return `
+            <form>
             <input type="text" name="show-search" id="show-search"/>
-            <button id="show-search-button">Choose Show</button>
+            <button type="submit" id="show-search-button">Choose Show</button>
+            </form>
         `;
     }
 
@@ -38,7 +41,34 @@ class ShowCard extends Component {
     }
 
     displayShow() {
-        return `<button id="new-search-button">Search For New Show</button>`;
+        const show = this.stateData.show;
+        return `
+            <span>${show.name}</span>
+            <br />
+            <button id="new-search-button">Search For New Show</button>
+        `;
+    }
+
+    getShowData(id = -1) {
+        // set stage to Loading
+        this.nextStage();
+        fetchShow(id)
+            .then((data) => {
+                const show = { show: data };
+                this.state.setState(show);
+
+                // set stage to Loaded
+                this.nextStage();
+            })
+            .catch((e) => {
+                console.log(e);
+                this.state.setState({
+                    show: {
+                        name: 'Error: Please try searching for another show.',
+                    },
+                });
+                this.nextStage();
+            });
     }
 
     nextStage() {
@@ -46,17 +76,14 @@ class ShowCard extends Component {
             // unloaded -> loading
             case 0:
                 this.state.setState({ showCardStage: 1 });
-                console.log('change stage 0 to 1');
                 break;
             // loading -> loaded
             case 1:
                 this.state.setState({ showCardStage: 2 });
-                console.log('change stage 1 to 2');
                 break;
             // loaded -> unloaded
             case 2:
                 this.state.setState({ showCardStage: 0 });
-                console.log('change stage 2 to 0');
                 break;
             default:
                 break;
@@ -69,10 +96,9 @@ class ShowCard extends Component {
                 '#show-search-button'
             );
             showSearchButton.addEventListener('click', (e) => {
-                this.nextStage();
-                setTimeout(() => {
-                    this.nextStage();
-                }, 3000);
+                const showSearchInput = document.querySelector('#show-search');
+                const id = showSearchInput.value.trim();
+                this.getShowData(id);
             });
         }
 

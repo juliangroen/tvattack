@@ -1,15 +1,15 @@
-import Observer from '../lib/Observer';
+import Observer from './Observer';
 
 class Component extends Observer {
     constructor(state, selector) {
-        super()
+        super();
         this.state = state;
+        this.stateData = state.getState();
         this.selector = selector;
         this.init();
     }
 
-    init() {
-    }
+    init() {}
 
     markup() {
         return ``;
@@ -21,14 +21,12 @@ class Component extends Observer {
         target.innerHTML = markup;
         this.bindEvents();
     }
-    
+
     update() {
-        this.render()
+        this.render();
     }
 
-
-    bindEvents() {
-    }
+    bindEvents() {}
 }
 
 export default Component;
