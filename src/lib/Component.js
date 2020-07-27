@@ -3,29 +3,29 @@ import Observer from '../lib/Observer';
 class Component extends Observer {
     constructor(state, selector) {
         super()
-        this.appState = state;
+        this.state = state;
         this.selector = selector;
-        this.attach();
+        this.init();
     }
 
-    markup(state) {
+    init() {
+    }
+
+    markup() {
         return ``;
     }
 
-    render(state, selector) {
-        const markup = this.markup(state);
-        const target = document.getElementById(selector);
+    render() {
+        const markup = this.markup();
+        const target = document.getElementById(this.selector);
         target.innerHTML = markup;
         this.bindEvents();
     }
     
     update() {
-        this.render(this.appState.getState(), this.selector)
+        this.render()
     }
 
-    attach() {
-        //this.update();
-    }
 
     bindEvents() {
     }
