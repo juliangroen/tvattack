@@ -1,11 +1,11 @@
 import Component from './Component';
 
 class StageComponent extends Component {
-    constructor() {
-        super();
-        this.stageId = `SC${Math.random().toString().slice(2, 10)}`;
+    constructor(state, selector) {
+        super(state, selector);
+        this.stageId = `s${Math.random().toString().slice(2, 10)}`;
         const stageObj = {};
-        stageObj[stageId] = 0;
+        stageObj[this.stageId] = 0;
         this.state.setState(stageObj);
     }
 
@@ -20,19 +20,16 @@ class StageComponent extends Component {
             case 0:
                 obj[this.stageId] = 1;
                 this.state.setState(obj);
-                console.log(`Stage: ${this.stateData[this.stageId]}`);
                 break;
             // loading -> loaded
             case 1:
                 obj[this.stageId] = 2;
                 this.state.setState(obj);
-                console.log(`Stage: ${this.stateData[this.stageId]}`);
                 break;
             // loaded -> unloaded
             case 2:
                 obj[this.stageId] = 0;
                 this.state.setState(obj);
-                console.log(`Stage: ${this.stateData[this.stageId]}`);
                 break;
             default:
                 break;

@@ -1,13 +1,10 @@
-import Component from '../lib/Component';
+import StageComponent from '../lib/StageComponent';
 import fetchShow from '../lib/Requests';
 
-class ShowCard extends Component {
-    init() {
-        this.stateData = this.state.getState();
-        this.state.setState({ showCardStage: 0 });
-    }
+class ShowCard extends StageComponent {
+
     markup() {
-        switch (this.stateData.showCardStage) {
+        switch (this.stateData[this.stageId]) {
             case 0:
                 return this.displaySearch();
                 break;
@@ -64,30 +61,11 @@ class ShowCard extends Component {
                 console.log(e);
                 this.state.setState({
                     show: {
-                        name: 'Error: Please try searching for another show.',
+                        name: `Error: ID ${id} did not match a show. Please try searching for another show.`,
                     },
                 });
                 this.nextStage();
             });
-    }
-
-    nextStage() {
-        switch (this.stateData.showCardStage) {
-            // unloaded -> loading
-            case 0:
-                this.state.setState({ showCardStage: 1 });
-                break;
-            // loading -> loaded
-            case 1:
-                this.state.setState({ showCardStage: 2 });
-                break;
-            // loaded -> unloaded
-            case 2:
-                this.state.setState({ showCardStage: 0 });
-                break;
-            default:
-                break;
-        }
     }
 
     bindEvents() {

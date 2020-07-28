@@ -6,10 +6,7 @@ class Component extends Observer {
         this.state = state;
         this.stateData = state.getState();
         this.selector = selector;
-        this.init();
     }
-
-    init() {}
 
     markup() {
         return ``;
