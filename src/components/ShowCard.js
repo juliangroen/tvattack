@@ -2,6 +2,10 @@ import StageComponent from '../lib/StageComponent';
 import fetchShow from '../lib/Requests';
 
 class ShowCard extends StageComponent {
+    constructor(state, selector) {
+        super(state, selector);
+        this.showKey = `${this.selector}-show`;
+    }
 
     markup() {
         switch (this.stateData[this.stageId]) {
@@ -25,8 +29,8 @@ class ShowCard extends StageComponent {
     displaySearch() {
         return `
             <form>
-            <input type="text" name="show-search" id="show-search"/>
-            <button type="submit" id="show-search-button">Choose Show</button>
+            <input type="text" name="show-search" class="show-search"/>
+            <button type="submit" class="show-search-button">Choose Show</button>
             </form>
         `;
     }
@@ -38,11 +42,11 @@ class ShowCard extends StageComponent {
     }
 
     displayShow() {
-        const show = this.stateData.show;
+        const show = this.stateData[this.showKey];
         return `
             <span>${show.name}</span>
             <br />
-            <button id="new-search-button">Search For New Show</button>
+            <button class="new-search-button">Search For New Show</button>
         `;
     }
 
@@ -51,7 +55,8 @@ class ShowCard extends StageComponent {
         this.nextStage();
         fetchShow(id)
             .then((data) => {
-                const show = { show: data };
+                const show = {};
+                show[this.showKey] = data;
                 this.state.setState(show);
 
                 // set stage to Loaded
@@ -59,32 +64,36 @@ class ShowCard extends StageComponent {
             })
             .catch((e) => {
                 console.log(e);
-                this.state.setState({
-                    show: {
-                        name: `Error: ID ${id} did not match a show. Please try searching for another show.`,
-                    },
-                });
+                const errorShow = {};
+                errorShow[this.showKey] = {
+                    name: `Error: ID ${id} did not match a show. Please try searching for another show.`,
+                };
+                this.state.setState(errorShow);
+                //this.state.setState({
+                //    showKey: {
+                //        name: `Error: ID ${id} did not match a show. Please try searching for another show.`,
+                //    },
+                //});
                 this.nextStage();
             });
     }
 
     bindEvents() {
-        if (document.querySelector('#show-search-button')) {
-            const showSearchButton = document.querySelector(
-                '#show-search-button'
-            );
+        const elements = document.querySelector(`#${this.selector}`);
+        //console.log(elements);
+        const showSearchInput = elements.querySelector('.show-search');
+        const showSearchButton = elements.querySelector('.show-search-button');
+        const newShowButton = elements.querySelector('.new-search-button');
+
+        if (showSearchButton) {
             showSearchButton.addEventListener('click', (e) => {
-                const showSearchInput = document.querySelector('#show-search');
                 const id = showSearchInput.value.trim();
                 this.getShowData(id);
             });
         }
 
-        if (document.querySelector('#new-search-button')) {
-            const newSearchButton = document.querySelector(
-                '#new-search-button'
-            );
-            newSearchButton.addEventListener('click', (e) => {
+        if (newShowButton) {
+            newShowButton.addEventListener('click', (e) => {
                 this.nextStage();
             });
         }

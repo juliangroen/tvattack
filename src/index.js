@@ -1,13 +1,11 @@
 import State from './lib/State';
-import Counter from './components/Counter';
 import ShowCard from './components/ShowCard';
-import fetchShow from './lib/Requests';
-import StageComponent from './lib/StageComponent';
-import TestCard from './components/TestCard';
 
 const $state = new State();
 
-const firstCard = new ShowCard($state, 'show-card');
+const firstCard = new ShowCard($state, 'first-card');
 $state.addObserver(firstCard);
 firstCard.update();
-
+const secondCard = new ShowCard($state, 'second-card');
+$state.addObserver(secondCard);
+secondCard.update();
