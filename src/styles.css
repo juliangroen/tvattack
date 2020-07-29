@@ -1,0 +1,12 @@
+html {
+    font-size: 16px;
+}
+
+body {
+    box-sizing: border-box;
+    display: flex;
+}
+
+div {
+    margin: 1rem;
+}
