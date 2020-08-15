@@ -43,12 +43,26 @@ class ShowCard extends StageComponent {
 
     displayShow() {
         const show = this.stateData[this.showKey];
+        const {name, type, image} = show; 
         return `
-            <span>${show.name}</span>
-            <br />
+            <p class="show-name">${name ? name : `N/A`}</p>
+            <p class="show-type">${type ? type : `N/A`}</p>
+            ${image ? `<img src="${image.medium ? image.medium : ``}" class="show-image" />` : ``}
             <button class="new-search-button">Search For New Show</button>
         `;
     }
+
+    //getShowValues(arrayOfKeys) {
+    //    const show = this.stateData[this.showKey];
+    //    const keys = arrayOfKeys;
+    //    const values = keys.map((key) => {
+    //        if (Array.isArray(key)) {
+    //            let 
+    //        } else {
+    //            return show[key] ? show[key] : `N/A`;
+    //        }
+    //    })
+    //}
 
     getShowData(id = -1) {
         // set stage to Loading

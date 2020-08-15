@@ -10,3 +10,16 @@ body {
 div {
     margin: 1rem;
 }
+
+.show-name {
+    font-size: 2rem;
+}
+
+.show-type {
+    font-size: 1rem;
+}
+
+.show-image {
+    display: block;
+    margin-bottom: 1rem;
+}
