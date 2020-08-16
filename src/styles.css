@@ -1,25 +1,49 @@
+:root {
+    /* colors */
+    --main-bg-color: #000000;
+    --card-bg-color: #262626;
+    --main-text-color: #eeeeee;
+
+    /* fonts */
+    --main-sans-font: sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
 html {
     font-size: 16px;
 }
 
 body {
+    background: var(--main-bg-color);
     box-sizing: border-box;
+    color: var(--main-text-color);
     display: flex;
+    font-family: var(--main-sans-font);
 }
 
 div {
     margin: 1rem;
 }
 
-.show-name {
+.show-card {
+    background: var(--card-bg-color);
+    border-radius: 0.5rem;
+    padding: 1rem;
+}
+
+#show-title {
     font-size: 2rem;
 }
 
-.show-type {
+.show-item {
     font-size: 1rem;
 }
 
-.show-image {
+.show-poster {
     display: block;
     margin-bottom: 1rem;
 }
