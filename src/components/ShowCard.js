@@ -28,7 +28,7 @@ class ShowCard extends StageComponent {
 
     displaySearch() {
         return /*html*/ `
-            <form>
+            <form class="show-search-form">
             <input type="text" name="show-search" class="show-search"/>
             <button type="submit" class="show-search-button">Choose Show</button>
             </form>
@@ -37,30 +37,101 @@ class ShowCard extends StageComponent {
 
     displayLoader() {
         return /*html*/ `
-        <svg width="44" height="44" stroke="#8844AA"><g fill="none" fill-rule="evenodd" stroke-width="2"><circle cx="22" cy="22" r="1"><animate attributeName="r" begin="0s" dur="1.8s" values="1; 20" calcMode="spline" keyTimes="0; 1" keySplines="0.165, 0.84, 0.44, 1" repeatCount="indefinite"/><animate attributeName="stroke-opacity" begin="0s" dur="1.8s" values="1; 0" calcMode="spline" keyTimes="0; 1" keySplines="0.3, 0.61, 0.355, 1" repeatCount="indefinite"/></circle><circle cx="22" cy="22" r="1"><animate attributeName="r" begin="-0.9s" dur="1.8s" values="1; 20" calcMode="spline" keyTimes="0; 1" keySplines="0.165, 0.84, 0.44, 1" repeatCount="indefinite"/><animate attributeName="stroke-opacity" begin="-0.9s" dur="1.8s" values="1; 0" calcMode="spline" keyTimes="0; 1" keySplines="0.3, 0.61, 0.355, 1" repeatCount="indefinite"/></circle></g></svg>
+            <svg width="44" height="44" stroke="#8844AA">
+                <g fill="none" fill-rule="evenodd" stroke-width="2">
+                    <circle cx="22" cy="22" r="1">
+                        <animate
+                            attributeName="r"
+                            begin="0s"
+                            dur="1.8s"
+                            values="1; 20"
+                            calcMode="spline"
+                            keyTimes="0; 1"
+                            keySplines="0.165, 0.84, 0.44, 1"
+                            repeatCount="indefinite"
+                        />
+                        <animate
+                            attributeName="stroke-opacity"
+                            begin="0s"
+                            dur="1.8s"
+                            values="1; 0"
+                            calcMode="spline"
+                            keyTimes="0; 1"
+                            keySplines="0.3, 0.61, 0.355, 1"
+                            repeatCount="indefinite"
+                        />
+                    </circle>
+                    <circle cx="22" cy="22" r="1">
+                        <animate
+                            attributeName="r"
+                            begin="-0.9s"
+                            dur="1.8s"
+                            values="1; 20"
+                            calcMode="spline"
+                            keyTimes="0; 1"
+                            keySplines="0.165, 0.84, 0.44, 1"
+                            repeatCount="indefinite"
+                        />
+                        <animate
+                            attributeName="stroke-opacity"
+                            begin="-0.9s"
+                            dur="1.8s"
+                            values="1; 0"
+                            calcMode="spline"
+                            keyTimes="0; 1"
+                            keySplines="0.3, 0.61, 0.355, 1"
+                            repeatCount="indefinite"
+                        />
+                    </circle>
+                </g>
+            </svg>
         `;
     }
 
     displayShow() {
         const show = this.stateData[this.showKey];
-        const { name, type, image, genres, language, rating } = show;
+        const { name, type, image, genres, language, rating, network } = show;
+
+        const embedded = show['_embedded'] ? show['_embedded'] : [];
+        const episodes = embedded['episodes'] ? embedded['episodes'] : [];
+        const images = embedded['images'] ? embedded['images'] : [];
+        const imagesArray = [];
+        for (const i of images) {
+            if (i.resolutions.original) {
+                if (i.resolutions.medium) {
+                    imagesArray.push([i.resolutions.original.url, i.resolutions.medium.url]);
+                } else {
+                    imagesArray.push([i.resolutions.original.url]);
+                }
+            } else if (i.resolutions.medium) {
+                imagesArray.push([i.resolutions.medium.url]);
+            } else {
+                imagesArray.push(['']);
+            }
+        }
+
+        const networkName = network.name;
+        const networkCountry = network.country ? network.country.name : '';
+
         return /*html*/ `
-            <div class="show-item" id="show-title">${name ? name : `N/A`}</div>
-            ${image ? `<img src="${image.medium ? image.medium : ``}" class="show-poster" />` : ``}
+            <div class="show-item show-title">${name ? name : `N/A`}</div>
+            <div class="show-item show-network">${`${networkName ? networkName : ``} - ${networkCountry ? networkCountry : ``}`}</div>
+            ${image ? `<img src="${image.original ? image.original : ``}" class="show-poster" />` : ``}
             <div class="show-item-label">Type: </div>
             <div class="show-item">${type ? type : `N/A`}</div>
             <div class="show-item-label">Genres: </div>
             <ul class="show-genres-list">
             ${genres.map((genre) => /*html*/ `<li class="show-genres-list-item">${genre}</li>`).join('')}
             </ul>
-            <div class="item-label">Average Rating: </div>
-            ${
-                rating
-                    ? /*html*/ `<div class="show-item">${rating.average ? `${rating.average}/10` : `N/A`}</div>`
-                    : `N/A`
-            }
-            <div class="item-label">Language: </div>
+            <div class="show-item-label">Average Rating: </div>
+            ${rating ? /*html*/ `<div class="show-item">${rating.average ? `${rating.average} / 10` : `N/A`}</div>` : `N/A`}
+            <div class="show-item-label">Language: </div>
             <div class="show-item">${language}</div>
+            <div class="show-item-label">Episode Count: </div>
+            <div class="show-item">${episodes.length}</div>
+            <div class="show-misc-image-container">
+                ${imagesArray.map((url) => /*html*/ `<a href="${url[0]}"><img src="${url[1] ? url[1] : url[0]}" class="show-misc-image" /></a>`).join('')}
+            </div>
             <button class="new-search-button">Search For New Show</button>
         `;
     }
