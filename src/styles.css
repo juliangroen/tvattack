@@ -74,6 +74,11 @@ button {
     padding: var(--spacing-small);
 }
 
+.show-header {
+    margin-bottom: var(--spacing-normal);
+    width: 100%;
+}
+
 .show-item {
     font-size: 1rem;
     margin-bottom: var(--spacing-normal);
@@ -103,15 +108,12 @@ button {
 }
 
 .show-network {
-    font-size: 1rem;
     font-style: italic;
-    padding: 0;
-    width: 100%;
 }
 
 .show-poster {
     border-radius: var(--border-radius-normal);
-    margin-bottom: var(--spacing-normal);
+    margin: calc(var(--spacing-normal) * 2);
     width: 100%;
 }
 
@@ -120,7 +122,6 @@ button {
     border-radius: var(--border-radius-normal) 0 0 var(--border-radius-normal);
     border: 0;
     height: 2rem;
-    padding: var(--spacing-small);
     width: 68%;
 }
 
@@ -139,7 +140,5 @@ button {
 
 .show-title {
     font-size: 2rem;
-    height: 2rem;
-    width: 100%;
-    padding: 0;
+    margin-bottom: var(--spacing-small);
 }

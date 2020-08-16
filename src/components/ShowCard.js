@@ -114,8 +114,10 @@ class ShowCard extends StageComponent {
         const networkCountry = network.country ? network.country.name : '';
 
         return /*html*/ `
-            <div class="show-item show-title">${name ? name : `N/A`}</div>
-            <div class="show-item show-network">${`${networkName ? networkName : ``} - ${networkCountry ? networkCountry : ``}`}</div>
+            <div class="show-header">
+                <div class="show-title">${name ? name : `N/A`}</div>
+                <div class="show-network">${`${networkName ? networkName : ``} - ${networkCountry ? networkCountry : ``}`}</div>
+            </div>
             ${image ? `<img src="${image.original ? image.original : ``}" class="show-poster" />` : ``}
             <div class="show-item-label">Type: </div>
             <div class="show-item">${type ? type : `N/A`}</div>
