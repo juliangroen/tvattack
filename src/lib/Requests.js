@@ -1,6 +1,6 @@
 const baseUrl = 'https://api.tvmaze.com/';
 
-async function fetchShow(id) {
+export async function fetchShow(id) {
     //const url = `${this.baseUrl}/shows/${id}?embed[]=episodes&embed[]=images`
     const url = `${baseUrl}shows/${id}?embed[]=episodes&embed[]=images`;
     let response = await fetch(url);
@@ -12,7 +12,7 @@ async function fetchShow(id) {
     }
 }
 
-async function searchShow(string) {
+export async function searchShow(string) {
     // http://api.tvmaze.com/singlesearch/shows?q=girls
     const url = `${baseUrl}search/shows?q=${string}`;
     let response = await fetch(url);
@@ -24,4 +24,4 @@ async function searchShow(string) {
     }
 }
 
-export default fetchShow;
+//export default { fetchShow, searchShow };

@@ -1,10 +1,11 @@
 import StageComponent from '../lib/StageComponent';
-import fetchShow from '../lib/Requests';
+import { fetchShow, searchShow } from '../lib/Requests';
 
 class ShowCard extends StageComponent {
     constructor(state, selector) {
         super(state, selector);
         this.showKey = `${this.selector}-show`;
+        this.resultsKey = `${this.selector}-results`;
     }
 
     markup() {
@@ -27,16 +28,32 @@ class ShowCard extends StageComponent {
     }
 
     displaySearch() {
+        const searchResults = this.stateData[this.resultsKey];
         return /*html*/ `
             <form class="show-search-form">
             <input type="text" name="show-search" class="show-search"/>
             <button type="submit" class="show-search-button">Search Show</button>
             </form>
+            ${(() => {
+                let resultItems = ``;
+                if (searchResults) {
+                    for (const result of searchResults) {
+                        resultItems += `<li class="search-results-item"> <a href="#" data-id="${result.show.id}" class="search-results-link"> ${result.show.name} </a></li>`;
+                    }
+                }
+
+                return /*html*/ `
+                    <ul class="search-results-list">
+                        ${resultItems}
+                    </ul>
+                `;
+            })()}   
         `;
     }
 
     displayLoader() {
         return /*html*/ `
+        <div class="svg-loader">
             <svg width="44" height="44" stroke="#8844AA">
                 <g fill="none" fill-rule="evenodd" stroke-width="2">
                     <circle cx="22" cy="22" r="1">
@@ -85,13 +102,14 @@ class ShowCard extends StageComponent {
                     </circle>
                 </g>
             </svg>
+        </div>
         `;
     }
 
     displayShow() {
         const show = this.stateData[this.showKey];
-        const { name, type, image, genres, language, rating, network } = show;
-
+        const { name, type, image, genres, language, rating } = show;
+        const network = show['network'] ? show['network'] : [];
         const embedded = show['_embedded'] ? show['_embedded'] : [];
         const episodes = embedded['episodes'] ? embedded['episodes'] : [];
         const images = embedded['images'] ? embedded['images'] : [];
@@ -99,10 +117,7 @@ class ShowCard extends StageComponent {
         for (const i of images) {
             if (i.resolutions.original) {
                 if (i.resolutions.medium) {
-                    imagesArray.push([
-                        i.resolutions.original.url,
-                        i.resolutions.medium.url,
-                    ]);
+                    imagesArray.push([i.resolutions.original.url, i.resolutions.medium.url]);
                 } else {
                     imagesArray.push([i.resolutions.original.url]);
                 }
@@ -113,45 +128,26 @@ class ShowCard extends StageComponent {
             }
         }
 
-        const networkName = network.name;
+        const networkName = network.name ? network.name : '';
         const networkCountry = network.country ? network.country.name : '';
 
         return /*html*/ `
             <div class="show-header">
                 <div class="show-title">${name ? name : `N/A`}</div>
-                <div class="show-network">${`${
-                    networkName ? networkName : ``
-                } - ${networkCountry ? networkCountry : ``}`}</div>
+                <div class="show-network">${`${networkName ? networkName : ``} - ${networkCountry ? networkCountry : ``}`}</div>
             </div>
             <div class="show-poster-container">
-                ${
-                    image
-                        ? `<img src="${
-                              image.original ? image.original : ``
-                          }" class="show-poster" />`
-                        : ``
-                }
+                ${image ? `<img src="${image.original ? image.original : ``}" class="show-poster" />` : ``}
             </div>
             <div class="show-item-container">
                 <div class="show-item-label">Type: </div>
                 <div class="show-item">${type ? type : `N/A`}</div>
                 <div class="show-item-label">Genres: </div>
                 <ul class="show-genres-list">
-                ${genres
-                    .map(
-                        (genre) =>
-                            /*html*/ `<li class="show-genres-list-item">${genre}</li>`
-                    )
-                    .join('')}
+                ${genres.map((genre) => /*html*/ `<li class="show-genres-list-item">${genre}</li>`).join('')}
                 </ul>
                 <div class="show-item-label">Average Rating: </div>
-                ${
-                    rating
-                        ? /*html*/ `<div class="show-item">${
-                              rating.average ? `${rating.average} / 10` : `N/A`
-                          }</div>`
-                        : `N/A`
-                }
+                ${rating ? /*html*/ `<div class="show-item">${rating.average ? `${rating.average} / 10` : `N/A`}</div>` : `N/A`}
                 <div class="show-item-label">Language: </div>
                 <div class="show-item">${language}</div>
                 <div class="show-item-label">Episode Count: </div>
@@ -160,10 +156,9 @@ class ShowCard extends StageComponent {
             <div class="show-misc-image-container">
                 ${imagesArray
                     .map(
-                        (url) =>
-                            /*html*/ `<a href="${url[0]}"><img src="${
-                                url[1] ? url[1] : url[0]
-                            }" class="show-misc-image" /></a>`
+                        (url) => /*html*/ `
+                    <a href="${url[0]}"><img src="${url[1] ? url[1] : url[0]}" class="show-misc-image" /></a>
+                `
                     )
                     .join('')}
             </div>
@@ -194,22 +189,48 @@ class ShowCard extends StageComponent {
             });
     }
 
+    getShowResults(string = '') {
+        searchShow(string)
+            .then((data) => {
+                const showResults = {};
+                showResults[this.resultsKey] = data;
+                this.state.setState(showResults);
+            })
+            .catch((e) => {
+                console.log(e);
+            });
+    }
+
     bindEvents() {
         const elements = document.querySelector(`#${this.selector}`);
         const showSearchInput = elements.querySelector('.show-search');
         const showSearchButton = elements.querySelector('.show-search-button');
         const newShowButton = elements.querySelector('.new-search-button');
+        const allSearchLinks = elements.querySelectorAll('.search-results-link');
 
         if (showSearchButton) {
             showSearchButton.addEventListener('click', (e) => {
-                const id = showSearchInput.value.trim();
-                this.getShowData(id);
+                e.preventDefault();
+                const query = showSearchInput.value.trim();
+                this.getShowResults(query);
             });
         }
 
         if (newShowButton) {
             newShowButton.addEventListener('click', (e) => {
+                e.preventDefault();
+                const clearedResults = {};
+                clearedResults[this.resultsKey] = '';
+                this.state.setState(clearedResults);
                 this.nextStage();
+            });
+        }
+
+        for (const link of allSearchLinks) {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const id = e.target.dataset.id;
+                this.getShowData(id);
             });
         }
     }
