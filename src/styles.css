@@ -3,6 +3,7 @@
     --main-bg-color: #000000;
     --main-primary-color: #6969ff;
     --main-text-color: #eeeeee;
+    --faded-text-color: #666666;
     --card-bg-color: #262626;
 
     /* fonts */
@@ -41,36 +42,44 @@ button {
     border-radius: var(--border-radius-normal);
     color: var(--main-text-color);
     cursor: pointer;
+    height: 2rem;
     padding: var(--spacing-small);
     text-transform: uppercase;
+}
+
+.new-search-button {
+    align-self: flex-end;
+    width: 100%;
 }
 
 .show-card {
     background: var(--card-bg-color);
     border-radius: var(--border-radius-normal);
     display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
+    flex-direction: column;
+    justify-content: center;
     margin: var(--spacing-normal);
     padding: var(--spacing-normal);
-    width: 32rem;
+    width: 24rem;
 }
 
 .show-genres-list {
     align-content: center;
     display: flex;
     flex-wrap: wrap;
-    margin-bottom: var(--spacing-normal);
+    height: 6rem;
     width: 50%;
 }
 
 .show-genres-list-item {
-    font-size: 0.8rem;
-    display: inline;
     background: var(--main-primary-color);
     border-radius: var(--border-radius-normal);
+    display: inline-block;
+    font-size: 0.8rem;
+    line-height: 0.6rem;
     list-style: none;
     margin: var(--spacing-small);
+    min-height: 1.2rem;
     padding: var(--spacing-small);
 }
 
@@ -79,16 +88,20 @@ button {
     width: 100%;
 }
 
+.show-item-container {
+    align-content: flex-start;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
 .show-item {
-    font-size: 1rem;
-    margin-bottom: var(--spacing-normal);
     padding: var(--spacing-normal) 0;
     width: 50%;
 }
 
 .show-item-label {
     font-weight: bold;
-    margin-bottom: var(--spacing-normal);
     padding: var(--spacing-normal) 0;
     width: 50%;
 }
@@ -103,18 +116,29 @@ button {
 }
 
 .show-misc-image-container {
-    margin-bottom: var(--spacing-normal);
+    height: auto;
+    flex-grow: 1;
     width: 100%;
 }
 
 .show-network {
+    color: var(--faded-text-color);
     font-style: italic;
 }
 
 .show-poster {
     border-radius: var(--border-radius-normal);
-    margin: calc(var(--spacing-normal) * 2);
-    width: 100%;
+    object-fit: contain;
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+}
+
+.show-poster-container {
+    height: 24rem;
+    margin: auto;
+    width: 16rem;
 }
 
 .show-search {
@@ -140,5 +164,4 @@ button {
 
 .show-title {
     font-size: 2rem;
-    margin-bottom: var(--spacing-small);
 }

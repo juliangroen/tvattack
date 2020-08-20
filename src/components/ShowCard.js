@@ -30,7 +30,7 @@ class ShowCard extends StageComponent {
         return /*html*/ `
             <form class="show-search-form">
             <input type="text" name="show-search" class="show-search"/>
-            <button type="submit" class="show-search-button">Choose Show</button>
+            <button type="submit" class="show-search-button">Search Show</button>
             </form>
         `;
     }
@@ -99,7 +99,10 @@ class ShowCard extends StageComponent {
         for (const i of images) {
             if (i.resolutions.original) {
                 if (i.resolutions.medium) {
-                    imagesArray.push([i.resolutions.original.url, i.resolutions.medium.url]);
+                    imagesArray.push([
+                        i.resolutions.original.url,
+                        i.resolutions.medium.url,
+                    ]);
                 } else {
                     imagesArray.push([i.resolutions.original.url]);
                 }
@@ -116,23 +119,53 @@ class ShowCard extends StageComponent {
         return /*html*/ `
             <div class="show-header">
                 <div class="show-title">${name ? name : `N/A`}</div>
-                <div class="show-network">${`${networkName ? networkName : ``} - ${networkCountry ? networkCountry : ``}`}</div>
+                <div class="show-network">${`${
+                    networkName ? networkName : ``
+                } - ${networkCountry ? networkCountry : ``}`}</div>
             </div>
-            ${image ? `<img src="${image.original ? image.original : ``}" class="show-poster" />` : ``}
-            <div class="show-item-label">Type: </div>
-            <div class="show-item">${type ? type : `N/A`}</div>
-            <div class="show-item-label">Genres: </div>
-            <ul class="show-genres-list">
-            ${genres.map((genre) => /*html*/ `<li class="show-genres-list-item">${genre}</li>`).join('')}
-            </ul>
-            <div class="show-item-label">Average Rating: </div>
-            ${rating ? /*html*/ `<div class="show-item">${rating.average ? `${rating.average} / 10` : `N/A`}</div>` : `N/A`}
-            <div class="show-item-label">Language: </div>
-            <div class="show-item">${language}</div>
-            <div class="show-item-label">Episode Count: </div>
-            <div class="show-item">${episodes.length}</div>
+            <div class="show-poster-container">
+                ${
+                    image
+                        ? `<img src="${
+                              image.original ? image.original : ``
+                          }" class="show-poster" />`
+                        : ``
+                }
+            </div>
+            <div class="show-item-container">
+                <div class="show-item-label">Type: </div>
+                <div class="show-item">${type ? type : `N/A`}</div>
+                <div class="show-item-label">Genres: </div>
+                <ul class="show-genres-list">
+                ${genres
+                    .map(
+                        (genre) =>
+                            /*html*/ `<li class="show-genres-list-item">${genre}</li>`
+                    )
+                    .join('')}
+                </ul>
+                <div class="show-item-label">Average Rating: </div>
+                ${
+                    rating
+                        ? /*html*/ `<div class="show-item">${
+                              rating.average ? `${rating.average} / 10` : `N/A`
+                          }</div>`
+                        : `N/A`
+                }
+                <div class="show-item-label">Language: </div>
+                <div class="show-item">${language}</div>
+                <div class="show-item-label">Episode Count: </div>
+                <div class="show-item">${episodes.length}</div>
+            </div>
             <div class="show-misc-image-container">
-                ${imagesArray.map((url) => /*html*/ `<a href="${url[0]}"><img src="${url[1] ? url[1] : url[0]}" class="show-misc-image" /></a>`).join('')}
+                ${imagesArray
+                    .map(
+                        (url) =>
+                            /*html*/ `<a href="${url[0]}"><img src="${
+                                url[1] ? url[1] : url[0]
+                            }" class="show-misc-image" /></a>`
+                    )
+                    .join('')}
             </div>
             <button class="new-search-button">Search For New Show</button>
         `;
