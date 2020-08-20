@@ -11,15 +11,6 @@ $state.addObserver(secondCard);
 secondCard.update();
 
 const firstCardInput = document.querySelector('#first-card .show-search');
-const firstCardButton = document.querySelector(
-    '#first-card .show-search-button'
-);
+const firstCardButton = document.querySelector('#first-card .show-search-button');
 const secondCardInput = document.querySelector('#second-card .show-search');
-const secondCardButton = document.querySelector(
-    '#second-card .show-search-button'
-);
-
-firstCardInput.value = 'initial';
-//firstCardButton.click();
-//secondCardInput.value = 488;
-//secondCardButton.click();
+const secondCardButton = document.querySelector('#second-card .show-search-button');
