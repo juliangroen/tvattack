@@ -4,6 +4,7 @@
     --main-primary-color: #6969ff;
     --main-text-color: #eeeeee;
     --faded-text-color: #666666;
+    --card-item-bg-color: #363636;
     --card-bg-color: #262626;
 
     /* fonts */
@@ -39,6 +40,10 @@ a {
     color: var(--main-primary-color);
 }
 
+a:hover {
+    color: var(--main-text-color);
+}
+
 button {
     display: block;
     background: var(--main-primary-color);
@@ -57,6 +62,9 @@ button {
 }
 
 .search-results-link {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
     text-decoration: none;
 }
 
@@ -65,7 +73,18 @@ button {
 }
 
 .search-results-item {
+    border-radius: var(--border-radius-small);
+    background-color: var(--card-item-bg-color);
     list-style: none;
+    margin-bottom: var(--spacing-small);
+    padding: 0 var(--spacing-small) 0 0;
+}
+
+.search-results-thumb {
+    border-radius: var(--border-radius-small);
+    height: 3rem;
+    margin-right: var(--spacing-small);
+    width: 2rem;
 }
 
 .show-card {
@@ -161,7 +180,9 @@ button {
     background: var(--main-text-color);
     border-radius: var(--border-radius-normal) 0 0 var(--border-radius-normal);
     border: 0;
+    font-size: 1rem;
     height: 2rem;
+    padding: var(--spacing-small);
     width: 68%;
 }
 

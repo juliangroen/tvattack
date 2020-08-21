@@ -34,20 +34,34 @@ class ShowCard extends StageComponent {
             <input type="text" name="show-search" class="show-search"/>
             <button type="submit" class="show-search-button">Search Show</button>
             </form>
-            ${(() => {
-                let resultItems = ``;
-                if (searchResults) {
-                    for (const result of searchResults) {
-                        resultItems += `<li class="search-results-item"> <a href="#" data-id="${result.show.id}" class="search-results-link"> ${result.show.name} </a></li>`;
-                    }
-                }
+            ${this.displaySearchResults(searchResults)}
+        `;
+    }
 
-                return /*html*/ `
-                    <ul class="search-results-list">
-                        ${resultItems}
-                    </ul>
+    displaySearchResults(searchResults) {
+        let resultItems = ``;
+        if (searchResults) {
+            for (const result of searchResults) {
+                const showID = result.show.id ? result.show.id : '';
+                const name = result.show.name ? result.show.name : '';
+                const thumb = result.show.image ? result.show.image.medium : `${this.placeholderUrl(32, 48, '?')}`;
+                const networkName = result.show.network ? result.show.network.name : result.show.webChannel ? result.show.webChannel.name : '';
+                const date = result.show.premiered ? result.show.premiered : '';
+                resultItems += /*html*/ `
+                    <li class="search-results-item">
+                        <a href="#" data-id="${showID}" class="search-results-link">
+                            <img src="${thumb}" alt="" class="search-results-thumb"/>
+                            <div>${name} (${date !== '' ? date.substring(0, 4) : 'N/A'}, ${networkName})</div>
+                        </a>
+                    </li>
                 `;
-            })()}   
+            }
+        }
+
+        return /*html*/ `
+            <ul class="search-results-list">
+                ${resultItems}
+            </ul>
         `;
     }
 
@@ -110,6 +124,7 @@ class ShowCard extends StageComponent {
         const show = this.stateData[this.showKey];
         const { name, type, image, genres, language, rating } = show;
         const network = show['network'] ? show['network'] : [];
+        const webChannel = show['webChannel'] ? show['webChannel'] : [];
         const embedded = show['_embedded'] ? show['_embedded'] : [];
         const episodes = embedded['episodes'] ? embedded['episodes'] : [];
         const images = embedded['images'] ? embedded['images'] : [];
@@ -128,8 +143,8 @@ class ShowCard extends StageComponent {
             }
         }
 
-        const networkName = network.name ? network.name : '';
-        const networkCountry = network.country ? network.country.name : '';
+        const networkName = network.name ? network.name : webChannel.name ? webChannel.name : '';
+        const networkCountry = network.country ? network.country.name : webChannel.country ? webChannel.country : '';
 
         return /*html*/ `
             <div class="show-header">
@@ -137,7 +152,7 @@ class ShowCard extends StageComponent {
                 <div class="show-network">${`${networkName ? networkName : ``} - ${networkCountry ? networkCountry : ``}`}</div>
             </div>
             <div class="show-poster-container">
-                ${image ? `<img src="${image.original ? image.original : ``}" class="show-poster" />` : ``}
+                <img src="${image ? image.original : `${this.placeholderUrl(256, 384, 'No Poster Available')}`}" class="show-poster" />
             </div>
             <div class="show-item-container">
                 <div class="show-item-label">Type: </div>
@@ -164,6 +179,24 @@ class ShowCard extends StageComponent {
             </div>
             <button class="new-search-button">Search For New Show</button>
         `;
+    }
+
+    placeholderUrl(width, height = '', text = '') {
+        const bgColor = '666666';
+        const textColor = '262626';
+        if (height !== '') {
+            if (text !== '') {
+                return `https://via.placeholder.com/${width}x${height}/${bgColor}/${textColor}?text=${text.trim()}`;
+            } else {
+                return `https://via.placeholder.com/${width}x${height}/${bgColor}/${textColor}`;
+            }
+        } else {
+            if (text !== '') {
+                return `https://via.placeholder.com/${width}/${bgColor}/${textColor}?text=${text.trim()}`;
+            } else {
+                return `https://via.placeholder.com/${width}/${bgColor}/${textColor}`;
+            }
+        }
     }
 
     getShowData(id = -1) {
@@ -229,7 +262,7 @@ class ShowCard extends StageComponent {
         for (const link of allSearchLinks) {
             link.addEventListener('click', (e) => {
                 e.preventDefault();
-                const id = e.target.dataset.id;
+                const id = e.target.parentElement.dataset.id;
                 this.getShowData(id);
             });
         }
