@@ -191,16 +191,16 @@ button {
     background: var(--main-text-color);
     border-radius: var(--border-radius-normal) 0 0 var(--border-radius-normal);
     border: 0;
+    flex-grow: 1;
     font-size: 1rem;
     height: 2rem;
     padding: var(--spacing-small);
-    width: 68%;
 }
 
 .show-search-button {
     border-radius: 0 var(--border-radius-normal) var(--border-radius-normal) 0;
     height: 2rem;
-    width: 32%;
+    width: 38%;
 }
 
 .show-search-form {
