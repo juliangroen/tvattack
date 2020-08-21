@@ -49,7 +49,7 @@ class ShowCard extends StageComponent {
                 const date = result.show.premiered ? result.show.premiered : '';
                 resultItems += /*html*/ `
                     <li class="search-results-item">
-                        <a href="#" data-id="${showID}" class="search-results-link">
+                        <a href="#" data-id="${showID}" class="search-results-link" >
                             <img src="${thumb}" alt="" class="search-results-thumb"/>
                             <div>${name} (${date !== '' ? date.substring(0, 4) : 'N/A'}, ${networkName})</div>
                         </a>
@@ -122,16 +122,20 @@ class ShowCard extends StageComponent {
 
     displayShow() {
         const show = this.stateData[this.showKey];
-        const name = show['name'] ? show['name'] : [];
-        const type = show['type'] ? show['type'] : [];
+        const name = show['name'] ? show['name'] : '';
+        const type = show['type'] ? show['type'] : '';
         const image = show['image'];
-        const language = show['language'] ? show['language'] : [];
+        const language = show['language'] ? show['language'] : '';
         const rating = show['rating'] ? show['rating'] : [];
         const genres = show['genres'] ? show['genres'] : [];
+        const premiered = show['premiered'] ? show['premiered'] : '';
+        const year = premiered.substring(0, 4);
+
         const network = show['network'] ? show['network'] : [];
         const webChannel = show['webChannel'] ? show['webChannel'] : [];
         const networkName = network.name ? network.name : webChannel.name ? webChannel.name : '';
         const networkCountry = network.country ? network.country.name : webChannel.country ? webChannel.country.name : '';
+
         const embedded = show['_embedded'] ? show['_embedded'] : [];
         const episodes = embedded['episodes'] ? embedded['episodes'] : [];
         const images = embedded['images'] ? embedded['images'] : [];
@@ -159,6 +163,8 @@ class ShowCard extends StageComponent {
                 <img src="${image ? image.original : `${this.placeholderUrl(256, 384, 'No Poster Available')}`}" class="show-poster" />
             </div>
             <div class="show-item-container">
+                <div class="show-item-label">Year: </div>
+                <div class="show-item">${year ? year : `N/A`}</div>
                 <div class="show-item-label">Type: </div>
                 <div class="show-item">${type ? type : `N/A`}</div>
                 <div class="show-item-label">Genres: </div>
@@ -176,7 +182,7 @@ class ShowCard extends StageComponent {
                 ${imagesArray
                     .map(
                         (url) => /*html*/ `
-                    <a href="${url[0]}"><img src="${url[1] ? url[1] : url[0]}" class="show-misc-image" /></a>
+                    <a href="${url[0]}" target="_blank"><img src="${url[1] ? url[1] : url[0]}" class="show-misc-image" /></a>
                 `
                     )
                     .join('')}
