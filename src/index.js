@@ -1,5 +1,6 @@
 import State from './lib/State';
 import ShowCard from './components/ShowCard';
+import JudgeCard from './components/JudgeCard';
 
 const $state = new State();
 
@@ -9,6 +10,9 @@ firstCard.update();
 const secondCard = new ShowCard($state, 'second-card');
 $state.addObserver(secondCard);
 secondCard.update();
+const judgeCard = new JudgeCard($state, 'judge-card', firstCard, secondCard);
+$state.addObserver(judgeCard);
+judgeCard.update();
 
 const firstCardInput = document.querySelector('#first-card .show-search');
 const firstCardButton = document.querySelector('#first-card .show-search-button');

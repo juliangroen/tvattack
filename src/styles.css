@@ -56,6 +56,17 @@ button {
     text-transform: uppercase;
 }
 
+.judge-card {
+    background: var(--card-bg-color);
+    border-radius: var(--border-radius-normal);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: var(--spacing-normal);
+    padding: var(--spacing-normal);
+    text-align: center;
+}
+
 .new-search-button {
     align-self: flex-end;
     width: 100%;
