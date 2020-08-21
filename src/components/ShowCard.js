@@ -122,9 +122,16 @@ class ShowCard extends StageComponent {
 
     displayShow() {
         const show = this.stateData[this.showKey];
-        const { name, type, image, genres, language, rating } = show;
+        const name = show['name'] ? show['name'] : [];
+        const type = show['type'] ? show['type'] : [];
+        const image = show['image'];
+        const language = show['language'] ? show['language'] : [];
+        const rating = show['rating'] ? show['rating'] : [];
+        const genres = show['genres'] ? show['genres'] : [];
         const network = show['network'] ? show['network'] : [];
         const webChannel = show['webChannel'] ? show['webChannel'] : [];
+        const networkName = network.name ? network.name : webChannel.name ? webChannel.name : '';
+        const networkCountry = network.country ? network.country.name : webChannel.country ? webChannel.country.name : '';
         const embedded = show['_embedded'] ? show['_embedded'] : [];
         const episodes = embedded['episodes'] ? embedded['episodes'] : [];
         const images = embedded['images'] ? embedded['images'] : [];
@@ -142,9 +149,6 @@ class ShowCard extends StageComponent {
                 imagesArray.push(['']);
             }
         }
-
-        const networkName = network.name ? network.name : webChannel.name ? webChannel.name : '';
-        const networkCountry = network.country ? network.country.name : webChannel.country ? webChannel.country : '';
 
         return /*html*/ `
             <div class="show-header">
@@ -199,7 +203,7 @@ class ShowCard extends StageComponent {
         }
     }
 
-    getShowData(id = -1) {
+    getShowData(id) {
         // set stage to Loading
         this.nextStage();
         fetchShow(id)
@@ -222,7 +226,7 @@ class ShowCard extends StageComponent {
             });
     }
 
-    getShowResults(string = '') {
+    getShowResults(string) {
         searchShow(string)
             .then((data) => {
                 const showResults = {};
@@ -262,7 +266,8 @@ class ShowCard extends StageComponent {
         for (const link of allSearchLinks) {
             link.addEventListener('click', (e) => {
                 e.preventDefault();
-                const id = e.target.parentElement.dataset.id;
+                const anchor = e.target.closest('.search-results-link');
+                const id = anchor.dataset.id;
                 this.getShowData(id);
             });
         }
