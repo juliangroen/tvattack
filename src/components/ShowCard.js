@@ -32,7 +32,7 @@ class ShowCard extends StageComponent {
         return /*html*/ `
             <form class="show-search-form">
             <input type="text" name="show-search" class="show-search"/>
-            <button type="submit" class="show-search-button">Search Show</button>
+            <button type="submit" class="show-search-button">Search</button>
             </form>
             ${this.displaySearchResults(searchResults)}
         `;
