@@ -34,6 +34,7 @@ class StageComponent extends Component {
             default:
                 break;
         }
+        //console.log(`${this.selector}: ${this.stateData[this.stageId]}`);
     }
 
     displayLoader() {

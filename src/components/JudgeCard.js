@@ -8,8 +8,8 @@ class JudgeCard extends StageComponent {
     }
 
     update() {
-        super.update();
         this.checkShowStages();
+        super.update();
     }
 
     markup() {
@@ -34,6 +34,7 @@ class JudgeCard extends StageComponent {
     checkShowStages() {
         const firstStageId = this.firstShow.stageId;
         const secondStageId = this.secondShow.stageId;
+
         const stateString = [this.stateData[firstStageId], this.stateData[secondStageId]].join('');
         if (stateString == '01' || stateString == '10') {
             if (this.stateData[this.stageId] == '0') {
@@ -46,7 +47,7 @@ class JudgeCard extends StageComponent {
             }
         }
         if (stateString == '02' || stateString == '20') {
-            if (this.stateData[this.stageId] == '2') {
+            if (this.stateData[this.stageId] == '2' || this.stateData[this.stageId] == '0') {
                 this.nextStage();
             }
         }
@@ -56,10 +57,6 @@ class JudgeCard extends StageComponent {
         return /*html*/ `
             <h1>VS</h1>
         `;
-    }
-
-    displayLoader() {
-        return this.displayVersus();
     }
 
     displayStats() {
