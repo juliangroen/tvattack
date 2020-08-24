@@ -7,6 +7,9 @@
     --card-item-bg-color: #363636;
     --card-bg-color: #262626;
 
+    --compare-green: #48aa96;
+    --compare-red: #aa6464;
+
     /* fonts */
     --main-sans-font: sans-serif;
 
@@ -56,6 +59,40 @@ button {
     text-transform: uppercase;
 }
 
+.compare-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    height: 100%;
+}
+
+.compare-container > div {
+    width: 50%;
+}
+
+.compare-container .versus {
+    font-size: 2rem;
+    font-weight: bold;
+    padding: var(--spacing-small);
+    margin: 0 0 auto 0;
+    width: 100%;
+}
+
+.compare-items > div {
+    background: var(--faded-text-color);
+    border-radius: var(--border-radius-normal);
+    padding: var(--spacing-small);
+    margin: var(--spacing-normal) var(--spacing-small);
+    text-align: center;
+}
+
+.compare-items .green {
+    background: var(--compare-green);
+}
+.compare-items .red {
+    background: var(--compare-red);
+}
+
 .judge-card {
     background: var(--card-bg-color);
     border-radius: var(--border-radius-normal);
@@ -65,6 +102,7 @@ button {
     margin: var(--spacing-normal);
     padding: var(--spacing-normal);
     text-align: center;
+    min-width: 16rem;
 }
 
 .new-search-button {

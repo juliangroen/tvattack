@@ -62,12 +62,15 @@ class JudgeCard extends StageComponent {
     displayStats() {
         const { firstItems, secondItems } = this.pullShowStats();
         return /*html*/ `
-            <p>
-                ${firstItems.map((item) => item)};
-            </p>
-            <p>
-                ${secondItems.map((item) => item)};
-            </p>
+            <div class="compare-container">
+                <div class="versus">VS</div>
+                <div class="compare-items">
+                    ${firstItems.map((item) => /*html*/ `<div>${item}</div>`).join('')}
+                </div>
+                <div class="compare-items">
+                    ${secondItems.map((item) => /*html*/ `<div>${item}</div>`).join('')}
+                </div>
+            </div>
         `;
     }
 
