@@ -49,4 +49,4 @@ const secondClick = () => {
     }, 1000);
 };
 
-firstClick();
+//firstClick();
