@@ -113,12 +113,12 @@ class JudgeCard extends StageComponent {
         const secondSet = [...secondArray];
 
         // compare date
-        if (parseInt(firstSet[0]) > parseInt(secondSet[0])) {
+        if (parseInt(firstSet[0]) > parseInt(secondSet[0]) || secondSet[0] === 'N/A') {
             firstSet[0] = [firstSet[0], 'green'];
             secondSet[0] = [secondSet[0], 'red'];
             //firstSet.splice(0, 0, [firstSet[0], 'green']);
             //secondSet.splice(0, 0, [secondSet[0], 'red']);
-        } else {
+        } else if (parseInt(firstSet[0]) < parseInt(secondSet[0]) || firstSet[0] === 'N/A') {
             firstSet[0] = [firstSet[0], 'red'];
             secondSet[0] = [secondSet[0], 'green'];
             //firstSet.splice(0, 0, [firstSet[0], 'red']);
@@ -126,12 +126,12 @@ class JudgeCard extends StageComponent {
         }
 
         // compare rating
-        if (parseFloat(firstSet[2].split(' ')[0]) > parseFloat(secondSet[2].split(' ')[0])) {
+        if (parseFloat(firstSet[2].split(' ')[0]) > parseFloat(secondSet[2].split(' ')[0]) || secondSet[2] === 'N/A') {
             firstSet[2] = [firstSet[2], 'green'];
             secondSet[2] = [secondSet[2], 'red'];
             //firstSet.splice(2, 2, [firstSet[2], 'green']);
             //secondSet.splice(2, 2, [secondSet[2], 'red']);
-        } else {
+        } else if (parseFloat(firstSet[2].split(' ')[0]) < parseFloat(secondSet[2].split(' ')[0]) || firstSet[2] === 'N/A') {
             firstSet[2] = [firstSet[2], 'red'];
             secondSet[2] = [secondSet[2], 'green'];
             //firstSet.splice(2, 2, [firstSet[2], 'red']);
@@ -139,12 +139,12 @@ class JudgeCard extends StageComponent {
         }
 
         // compare episode count
-        if (parseInt(firstSet[4]) > parseInt(secondSet[4])) {
+        if (parseInt(firstSet[4]) > parseInt(secondSet[4]) || secondSet[4] === 'N/A') {
             firstSet[4] = [firstSet[4], 'green'];
             secondSet[4] = [secondSet[4], 'red'];
             //firstSet.splice(4, 4, [firstSet[4], 'green']);
             //secondSet.splice(4, 4, [secondSet[4], 'red']);
-        } else {
+        } else if (parseInt(firstSet[4]) < parseInt(secondSet[4]) || firstSet[4] === 'N/A') {
             firstSet[4] = [firstSet[4], 'red'];
             secondSet[4] = [secondSet[4], 'green'];
             //firstSet.splice(4, 4, [firstSet[4], 'red']);
