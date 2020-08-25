@@ -19,10 +19,10 @@ const firstCardButton = document.querySelector('#first-card .show-search-button'
 const secondCardInput = document.querySelector('#second-card .show-search');
 const secondCardButton = document.querySelector('#second-card .show-search-button');
 
-//firstCardInput.value = 'bebop';
-//firstCardButton.click();
-//secondCardInput.value = 'er';
-//secondCardButton.click();
+firstCardInput.value = 'initial';
+firstCardButton.click();
+secondCardInput.value = 'ghoul';
+secondCardButton.click();
 
 const firstClick = () => {
     const id = setInterval(() => {
@@ -49,4 +49,4 @@ const secondClick = () => {
     }, 1000);
 };
 
-//firstClick();
+firstClick();

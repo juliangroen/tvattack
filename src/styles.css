@@ -2,6 +2,7 @@
     /* colors */
     --main-bg-color: #000000;
     --main-primary-color: #6969ff;
+    --main-darker-color: #6060ee;
     --main-text-color: #eeeeee;
     --faded-text-color: #666666;
     --card-item-bg-color: #363636;
@@ -19,6 +20,8 @@
 
     --spacing-normal: 1rem;
     --spacing-small: 0.4rem;
+
+    --card-width: 24rem;
 }
 
 * {
@@ -35,6 +38,7 @@ body {
     background: var(--main-bg-color);
     color: var(--main-text-color);
     display: flex;
+    flex-wrap: wrap;
     font-family: var(--main-sans-font);
     padding: var(--spacing-normal);
 }
@@ -59,41 +63,58 @@ button {
     text-transform: uppercase;
 }
 
+button:hover {
+    background: var(--main-darker-color);
+}
+
 .compare-container {
     display: flex;
     flex-direction: row;
-    flex-wrap: wrap;
     height: 100%;
-}
-
-.compare-container > div {
-    width: 50%;
-}
-
-.compare-container .versus {
-    font-size: 2rem;
-    font-weight: bold;
-    padding: var(--spacing-small);
-    margin: 0 0 auto 0;
     width: 100%;
 }
 
-.compare-items > div {
+.compare-container > div {
+}
+
+.compare-container .versus {
+    font-size: 2.5rem;
+    font-weight: bold;
+    padding: var(--spacing-small) 0;
+    width: 20%;
+}
+
+.compare-item-content {
+    margin: var(--spacing-normal) 0;
+}
+
+.compare-item-content > div {
     background: var(--faded-text-color);
-    border-radius: var(--border-radius-normal);
+    border-radius: 0 0 var(--border-radius-normal) var(--border-radius-normal);
     padding: var(--spacing-small);
-    margin: var(--spacing-normal) var(--spacing-small);
     text-align: center;
+}
+
+.compare-item-content > .label {
+    background: var(--card-item-bg-color);
+    border-radius: var(--border-radius-normal) var(--border-radius-normal) 0 0;
+}
+
+.compare-items {
+    margin: auto 0;
+    width: 40%;
 }
 
 .compare-items .green {
     background: var(--compare-green);
+    font-weight: bold;
 }
 .compare-items .red {
     background: var(--compare-red);
 }
 
 .judge-card {
+    align-items: center;
     background: var(--card-bg-color);
     border-radius: var(--border-radius-normal);
     display: flex;
@@ -102,7 +123,32 @@ button {
     margin: var(--spacing-normal);
     padding: var(--spacing-normal);
     text-align: center;
-    min-width: 16rem;
+    width: var(--card-width);
+}
+
+.main {
+    margin: var(--spacing-normal);
+    width: 100%;
+    text-align: center;
+}
+
+.main > div {
+    background: var(--card-bg-color);
+    border-radius: var(--border-radius-normal);
+    color: var(--main-primary-color);
+    font-size: 3rem;
+    font-weight: bold;
+    letter-spacing: 0.5rem;
+    padding: var(--spacing-normal);
+    width: calc((var(--card-width) * 3) + calc(var(--spacing-normal) * 4));
+}
+
+.main a {
+    text-decoration: none;
+}
+
+.main a:hover {
+    color: var(--main-text-color);
 }
 
 .new-search-button {
@@ -144,7 +190,7 @@ button {
     justify-content: center;
     margin: var(--spacing-normal);
     padding: var(--spacing-normal);
-    width: 24rem;
+    width: var(--card-width);
 }
 
 .show-genres-list {

@@ -64,32 +64,53 @@ class JudgeCard extends StageComponent {
         const { firstSet, secondSet } = this.compareStats(firstItems, secondItems);
         const firstSetElements = [];
         const secondSetElements = [];
-        firstSet.map((item) => {
+        const labelNames = ['Year', 'Type', 'Average Rating', 'Language', 'Episode Count'];
+        firstSet.map((item, index) => {
             if (Array.isArray(item)) {
-                const html = /*html*/ `<div class="${item[1]}">${item[0]}</div>`;
+                const html = /*html*/ `
+                    <div class="compare-item-content">
+                        <div class="label">${labelNames[index]}</div>
+                        <div class="${item[1]}">${item[0]}</div>
+                    </div>
+                `;
                 firstSetElements.push(html);
             } else {
-                const html = /*html*/ `<div>${item}</div>`;
+                const html = /*html*/ `
+                    <div class="compare-item-content">
+                        <div class="label">${labelNames[index]}</div>
+                        <div>${item}</div>
+                    </div>
+                `;
                 firstSetElements.push(html);
             }
         });
 
-        secondSet.map((item) => {
+        secondSet.map((item, index) => {
             if (Array.isArray(item)) {
-                const html = /*html*/ `<div class="${item[1]}">${item[0]}</div>`;
+                const html = /*html*/ `
+                    <div class="compare-item-content">
+                        <div class="label">${labelNames[index]}</div>
+                        <div class="${item[1]}">${item[0]}</div>
+                    </div>
+                `;
                 secondSetElements.push(html);
             } else {
-                const html = /*html*/ `<div>${item}</div>`;
+                const html = /*html*/ `
+                    <div class="compare-item-content">
+                        <div class="label">${labelNames[index]}</div>
+                        <div>${item}</div>
+                    </div>
+                `;
                 secondSetElements.push(html);
             }
         });
 
         return /*html*/ `
             <div class="compare-container">
-                <div class="versus">VS</div>
                 <div class="compare-items">
                     ${firstSetElements.map((el) => el).join('')}
                 </div>
+                <div class="versus">VS</div>
                 <div class="compare-items">
                     ${secondSetElements.map((el) => el).join('')}
                 </div>
@@ -122,19 +143,19 @@ class JudgeCard extends StageComponent {
         }
 
         // compare rating
-        if (parseFloat(firstSet[2].split(' ')[0]) > parseFloat(secondSet[2].split(' ')[0]) || (firstSet[0] !== 'N/A' && secondSet[0] === 'N/A')) {
+        if (parseFloat(firstSet[2].split(' ')[0]) > parseFloat(secondSet[2].split(' ')[0]) || (firstSet[2] !== 'N/A' && secondSet[2] === 'N/A')) {
             firstSet[2] = [firstSet[2], 'green'];
             secondSet[2] = [secondSet[2], 'red'];
-        } else if (parseFloat(firstSet[2].split(' ')[0]) < parseFloat(secondSet[2].split(' ')[0]) || (firstSet[0] === 'N/A' && secondSet[0] !== 'N/A')) {
+        } else if (parseFloat(firstSet[2].split(' ')[0]) < parseFloat(secondSet[2].split(' ')[0]) || (firstSet[2] === 'N/A' && secondSet[2] !== 'N/A')) {
             firstSet[2] = [firstSet[2], 'red'];
             secondSet[2] = [secondSet[2], 'green'];
         }
 
         // compare episode count
-        if (parseInt(firstSet[4]) > parseInt(secondSet[4]) || (firstSet[0] !== 'N/A' && secondSet[0] === 'N/A')) {
+        if (parseInt(firstSet[4]) > parseInt(secondSet[4]) || (firstSet[4] !== 'N/A' && secondSet[4] === 'N/A')) {
             firstSet[4] = [firstSet[4], 'green'];
             secondSet[4] = [secondSet[4], 'red'];
-        } else if (parseInt(firstSet[4]) < parseInt(secondSet[4]) || (firstSet[0] === 'N/A' && secondSet[0] !== 'N/A')) {
+        } else if (parseInt(firstSet[4]) < parseInt(secondSet[4]) || (firstSet[4] === 'N/A' && secondSet[4] !== 'N/A')) {
             firstSet[4] = [firstSet[4], 'red'];
             secondSet[4] = [secondSet[4], 'green'];
         }
