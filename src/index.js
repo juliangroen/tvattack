@@ -19,9 +19,9 @@ const firstCardButton = document.querySelector('#first-card .show-search-button'
 const secondCardInput = document.querySelector('#second-card .show-search');
 const secondCardButton = document.querySelector('#second-card .show-search-button');
 
-firstCardInput.value = 'initial';
+firstCardInput.value = 'the next generation';
 firstCardButton.click();
-secondCardInput.value = 'ghoul';
+secondCardInput.value = 'deep space nine';
 secondCardButton.click();
 
 const firstClick = () => {
