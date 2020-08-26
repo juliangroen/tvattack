@@ -45,7 +45,11 @@ class ShowCard extends StageComponent {
                 const showID = result.show.id ? result.show.id : '';
                 const name = result.show.name ? result.show.name : '';
                 const thumb = result.show.image ? result.show.image.medium : `${this.placeholderUrl(32, 48, '?')}`;
-                const networkName = result.show.network ? result.show.network.name : result.show.webChannel ? result.show.webChannel.name : '';
+                const networkName = result.show.network
+                    ? result.show.network.name
+                    : result.show.webChannel
+                    ? result.show.webChannel.name
+                    : '';
                 const date = result.show.premiered ? result.show.premiered : '';
                 resultItems += /*html*/ `
                     <li class="search-results-item">
@@ -79,21 +83,31 @@ class ShowCard extends StageComponent {
         const network = show['network'] ? show['network'] : [];
         const webChannel = show['webChannel'] ? show['webChannel'] : [];
         const networkName = network.name ? network.name : webChannel.name ? webChannel.name : '';
-        const networkCountry = network.country ? network.country.name : webChannel.country ? webChannel.country.name : '';
+        const networkCountry = network.country
+            ? network.country.name
+            : webChannel.country
+            ? webChannel.country.name
+            : '';
 
         const embedded = show['_embedded'] ? show['_embedded'] : [];
         const episodes = embedded['episodes'] ? embedded['episodes'] : [];
+
+        const poster = `https:${image.original.split(':')[1]}`;
+        console.log(poster);
         const images = embedded['images'] ? embedded['images'] : [];
         const imagesArray = [];
         for (const i of images) {
             if (i.resolutions.original) {
                 if (i.resolutions.medium) {
-                    imagesArray.push([i.resolutions.original.url, i.resolutions.medium.url]);
+                    imagesArray.push([
+                        `https:${i.resolutions.original.url.split(':')[1]}`,
+                        `https:${i.resolutions.medium.url.split(':')[1]}`,
+                    ]);
                 } else {
-                    imagesArray.push([i.resolutions.original.url]);
+                    imagesArray.push([`https:${i.resolutions.original.url.split(':')[1]}`]);
                 }
             } else if (i.resolutions.medium) {
-                imagesArray.push([i.resolutions.medium.url]);
+                imagesArray.push([`https:${i.resolutions.medium.url.split(':')[1]}`]);
             } else {
                 imagesArray.push(['']);
             }
@@ -102,10 +116,14 @@ class ShowCard extends StageComponent {
         return /*html*/ `
             <div class="show-header">
                 <div class="show-title">${name ? name : `N/A`}</div>
-                <div class="show-network">${`${networkName ? networkName : ``} - ${networkCountry ? networkCountry : ``}`}</div>
+                <div class="show-network">${`${networkName ? networkName : ``} - ${
+                    networkCountry ? networkCountry : ``
+                }`}</div>
             </div>
             <div class="show-poster-container">
-                <img src="${image ? image.original : `${this.placeholderUrl(256, 384, 'No Poster Available')}`}" class="show-poster" />
+                <img src="${
+                    poster ? poster : `${this.placeholderUrl(256, 384, 'No Poster Available')}`
+                }" class="show-poster" />
             </div>
             <div class="show-item-container">
                 <div class="show-item-label">Year: </div>
@@ -117,7 +135,11 @@ class ShowCard extends StageComponent {
                 ${genres.map((genre) => /*html*/ `<li class="show-genres-list-item">${genre}</li>`).join('')}
                 </ul>
                 <div class="show-item-label">Average Rating: </div>
-                ${rating ? /*html*/ `<div class="show-item">${rating.average ? `${rating.average} / 10` : `N/A`}</div>` : `N/A`}
+                ${
+                    rating
+                        ? /*html*/ `<div class="show-item">${rating.average ? `${rating.average} / 10` : `N/A`}</div>`
+                        : `N/A`
+                }
                 <div class="show-item-label">Language: </div>
                 <div class="show-item">${language}</div>
                 <div class="show-item-label">Episode Count: </div>
@@ -127,7 +149,9 @@ class ShowCard extends StageComponent {
                 ${imagesArray
                     .map(
                         (url) => /*html*/ `
-                    <a href="${url[0]}" target="_blank"><img src="${url[1] ? url[1] : url[0]}" class="show-misc-image" /></a>
+                    <a href="${url[0]}" target="_blank"><img src="${
+                            url[1] ? url[1] : url[0]
+                        }" class="show-misc-image" /></a>
                 `
                     )
                     .join('')}
