@@ -69,7 +69,7 @@ class ShowCard extends StageComponent {
         const show = this.stateData[this.showKey];
         const name = show['name'] ? show['name'] : '';
         const type = show['type'] ? show['type'] : '';
-        const image = show['image'];
+        const image = show['image'] ? show['image'] : [];
         const language = show['language'] ? show['language'] : '';
         const rating = show['rating'] ? show['rating'] : [];
         const genres = show['genres'] ? show['genres'] : [];
@@ -84,7 +84,7 @@ class ShowCard extends StageComponent {
         const embedded = show['_embedded'] ? show['_embedded'] : [];
         const episodes = embedded['episodes'] ? embedded['episodes'] : [];
 
-        const poster = `https:${image.original.split(':')[1]}`;
+        const poster = image.original ? `https:${image.original.split(':')[1]}` : null;
         const images = embedded['images'] ? embedded['images'] : [];
         const imagesArray = [];
         for (const i of images) {
