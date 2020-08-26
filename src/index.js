@@ -19,11 +19,6 @@ const firstCardButton = document.querySelector('#first-card .show-search-button'
 const secondCardInput = document.querySelector('#second-card .show-search');
 const secondCardButton = document.querySelector('#second-card .show-search-button');
 
-firstCardInput.value = 'the next generation';
-firstCardButton.click();
-secondCardInput.value = 'deep space nine';
-secondCardButton.click();
-
 const firstClick = () => {
     const id = setInterval(() => {
         if (document.querySelectorAll('#first-card .search-results-link')[0]) {
@@ -49,4 +44,19 @@ const secondClick = () => {
     }, 1000);
 };
 
-firstClick();
+console.log(sessionStorage.getItem('tvattack-first-run'));
+
+if (sessionStorage.getItem('tvattack-first-run') === null) {
+    sessionStorage.setItem('tvattack-first-run', 'true');
+}
+
+if (sessionStorage.getItem('tvattack-first-run') === 'true') {
+    firstCardInput.value = 'the next generation';
+    firstCardButton.click();
+    secondCardInput.value = 'deep space nine';
+    secondCardButton.click();
+
+    console.log(sessionStorage.getItem('tvattack-first-run'));
+    firstClick();
+    sessionStorage.setItem('tvattack-first-run', 'false');
+}
