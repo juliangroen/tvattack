@@ -13,17 +13,18 @@
 
     /* fonts */
     --main-sans-font: sans-serif;
-    --font-size-large: 1.6rem;
-    --font-size-xl: 2.4rem;
+    --font-size-normal: 1.6rem;
+    --font-size-large: 2.4rem;
+    --font-size-xl: 3.2rem;
 
     /* misc */
     --border-radius-normal: 0.4rem;
     --border-radius-small: 0.2rem;
 
-    --spacing-normal: 1rem;
-    --spacing-small: 0.5rem;
+    --spacing-normal: 1.6rem;
+    --spacing-small: 0.8rem;
 
-    --card-width: 28rem;
+    --card-width: 40rem;
 }
 
 * {
@@ -80,7 +81,6 @@ button {
     border-radius: var(--border-radius-normal);
     color: var(--main-text-color);
     cursor: pointer;
-    height: 2.8rem;
     padding: var(--spacing-small);
     text-transform: uppercase;
 }
@@ -176,6 +176,8 @@ button:hover {
 
 .new-search-button {
     align-self: flex-end;
+    font-size: var(--font-size-normal);
+    height: 3.4rem;
     width: 100%;
 }
 
@@ -200,9 +202,10 @@ button:hover {
 
 .search-results-thumb {
     border-radius: var(--border-radius-small);
-    height: 3rem;
+    height: 6rem;
     margin-right: var(--spacing-small);
-    width: 2rem;
+    object-fit: cover;
+    width: 4rem;
 }
 
 .show-card {
@@ -221,6 +224,7 @@ button:hover {
     display: flex;
     flex-wrap: wrap;
     height: 6rem;
+    margin-bottom: var(--spacing-small);
     width: 50%;
 }
 
@@ -231,7 +235,7 @@ button:hover {
     font-size: var(--font-size-small);
     line-height: 0.6rem;
     list-style: none;
-    margin: var(--spacing-small);
+    margin: var(--spacing-small) var(--spacing-small) var(--spacing-small) 0;
     min-height: 1.2rem;
     padding: var(--spacing-small);
 }
@@ -261,17 +265,17 @@ button:hover {
 
 .show-misc-image {
     border-radius: var(--border-radius-normal);
-    height: 4rem;
-    margin: var(--spacing-small);
+    height: 6rem;
+    margin: calc(var(--spacing-small) / 2);
     object-fit: cover;
     object-position: 50% 0%;
-    width: 4rem;
+    width: 6rem;
 }
 
 .show-misc-image-container {
     flex-grow: 1;
-    height: 10rem;
-    margin-bottom: var(--spacing-small);
+    height: 7.2rem;
+    margin-bottom: var(--spacing-normal);
     overflow-y: auto;
     width: 100%;
 }
@@ -291,24 +295,24 @@ button:hover {
 }
 
 .show-poster-container {
-    height: 24rem;
+    height: 32rem;
     margin: auto;
-    width: 16rem;
+    width: 24rem;
 }
 
 .show-search {
     background: var(--main-text-color);
     border-radius: var(--border-radius-normal) 0 0 var(--border-radius-normal);
     border: 0;
-    font-size: var(--font-size-large);
-    height: 2rem;
+    font-size: var(--font-size-normal);
+    height: 2.4rem;
     padding: var(--spacing-small);
     width: 70%;
 }
 
 .show-search-button {
     border-radius: 0 var(--border-radius-normal) var(--border-radius-normal) 0;
-    height: 2rem;
+    height: 2.4rem;
     padding: 0 var(--spacing-small);
     width: 30%;
 }
