@@ -13,15 +13,17 @@
 
     /* fonts */
     --main-sans-font: sans-serif;
+    --font-size-large: 1.6rem;
+    --font-size-xl: 2.4rem;
 
     /* misc */
     --border-radius-normal: 0.4rem;
     --border-radius-small: 0.2rem;
 
     --spacing-normal: 1rem;
-    --spacing-small: 0.4rem;
+    --spacing-small: 0.5rem;
 
-    --card-width: 24rem;
+    --card-width: 28rem;
 }
 
 * {
@@ -30,8 +32,27 @@
     padding: 0;
 }
 
+/* The emerging W3C standard that is currently Firefox-only */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: var(--main-primary-color) var(--card-item-bg-color);
+}
+
+/* Works on Chrome/Edge/Safari */
+*::-webkit-scrollbar {
+    width: 1rem;
+}
+*::-webkit-scrollbar-track {
+    background: var(--card-item-bg-color);
+}
+*::-webkit-scrollbar-thumb {
+    background-color: var(--main-primary-color);
+    border-radius: 2rem;
+    border: 2px solid var(--card-item-bg-color);
+}
+
 html {
-    font-size: 16px;
+    font-size: 10px;
 }
 
 body {
@@ -40,6 +61,7 @@ body {
     display: flex;
     flex-wrap: wrap;
     font-family: var(--main-sans-font);
+    font-size: var(--font-size-normal);
     padding: var(--spacing-normal);
 }
 
@@ -58,7 +80,7 @@ button {
     border-radius: var(--border-radius-normal);
     color: var(--main-text-color);
     cursor: pointer;
-    height: 2rem;
+    height: 2.8rem;
     padding: var(--spacing-small);
     text-transform: uppercase;
 }
@@ -78,7 +100,7 @@ button:hover {
 }
 
 .compare-container .versus {
-    font-size: 2.5rem;
+    font-size: var(--font-size-xl);
     font-weight: bold;
     height: fit-content;
     padding: var(--spacing-small) 0;
@@ -92,6 +114,7 @@ button:hover {
 .compare-item-content > div {
     background: var(--faded-text-color);
     border-radius: 0 0 var(--border-radius-normal) var(--border-radius-normal);
+    font-size: var(--font-size-small);
     padding: var(--spacing-small);
     text-align: center;
 }
@@ -137,7 +160,7 @@ button:hover {
     background: var(--card-bg-color);
     border-radius: var(--border-radius-normal);
     color: var(--main-primary-color);
-    font-size: 3rem;
+    font-size: var(--font-size-xl);
     font-weight: bold;
     padding: var(--spacing-normal);
     width: calc((var(--card-width) * 3) + calc(var(--spacing-normal) * 4));
@@ -205,7 +228,7 @@ button:hover {
     background: var(--main-primary-color);
     border-radius: var(--border-radius-normal);
     display: inline-block;
-    font-size: 0.8rem;
+    font-size: var(--font-size-small);
     line-height: 0.6rem;
     list-style: none;
     margin: var(--spacing-small);
@@ -246,8 +269,10 @@ button:hover {
 }
 
 .show-misc-image-container {
-    height: auto;
     flex-grow: 1;
+    height: 10rem;
+    margin-bottom: var(--spacing-small);
+    overflow-y: auto;
     width: 100%;
 }
 
@@ -275,7 +300,7 @@ button:hover {
     background: var(--main-text-color);
     border-radius: var(--border-radius-normal) 0 0 var(--border-radius-normal);
     border: 0;
-    font-size: 1rem;
+    font-size: var(--font-size-large);
     height: 2rem;
     padding: var(--spacing-small);
     width: 70%;
@@ -296,7 +321,7 @@ button:hover {
 }
 
 .show-title {
-    font-size: 2rem;
+    font-size: var(--font-size-large);
 }
 
 .svg-loader {
@@ -304,7 +329,7 @@ button:hover {
 }
 
 .winner-container > .label {
-    font-size: 2.5rem;
+    font-size: var(--font-size-xl);
     letter-spacing: 0.2rem;
     text-transform: uppercase;
 }
@@ -312,7 +337,7 @@ button:hover {
 .winner-container > .show {
     background: var(--compare-green);
     border-radius: var(--border-radius-normal);
-    font-size: 2rem;
+    font-size: var(--font-size-large);
     margin: var(--spacing-normal);
     padding: var(--spacing-normal);
 }
