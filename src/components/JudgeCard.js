@@ -65,6 +65,8 @@ class JudgeCard extends StageComponent {
         const firstSetElements = [];
         const secondSetElements = [];
         const labelNames = ['Year', 'Type', 'Average Rating', 'Language', 'Episode Count'];
+        const winner = this.chooseWinner(firstSet, secondSet);
+
         firstSet.map((item, index) => {
             if (Array.isArray(item)) {
                 const html = /*html*/ `
@@ -115,6 +117,12 @@ class JudgeCard extends StageComponent {
                     ${secondSetElements.map((el) => el).join('')}
                 </div>
             </div>
+            <div class="winner-container">
+                <div class="label">${winner !== 'tie' ? 'Winner!' : ''}</div>
+                <div class="show ${winner !== 'tie' ? 'green' : 'red'}">${
+            winner !== 'tie' ? winner : 'No Contest!'
+        }</div>
+            </div>
         `;
 
         //${firstSet.map((item) => /*html*/ `<div>${item}</div>`).join('')}
@@ -126,6 +134,7 @@ class JudgeCard extends StageComponent {
         const firstItems = [...firstItemContainer.querySelectorAll('.show-item')].map((item) => item.innerHTML);
         const secondItemContainer = document.querySelector('#second-card .show-item-container');
         const secondItems = [...secondItemContainer.querySelectorAll('.show-item')].map((item) => item.innerHTML);
+
         return { firstItems, secondItems };
     }
 
@@ -137,16 +146,25 @@ class JudgeCard extends StageComponent {
         if (parseInt(firstSet[0]) > parseInt(secondSet[0]) || (firstSet[0] !== 'N/A' && secondSet[0] === 'N/A')) {
             firstSet[0] = [firstSet[0], 'green'];
             secondSet[0] = [secondSet[0], 'red'];
-        } else if (parseInt(firstSet[0]) < parseInt(secondSet[0]) || (firstSet[0] === 'N/A' && secondSet[0] !== 'N/A')) {
+        } else if (
+            parseInt(firstSet[0]) < parseInt(secondSet[0]) ||
+            (firstSet[0] === 'N/A' && secondSet[0] !== 'N/A')
+        ) {
             firstSet[0] = [firstSet[0], 'red'];
             secondSet[0] = [secondSet[0], 'green'];
         }
 
         // compare rating
-        if (parseFloat(firstSet[2].split(' ')[0]) > parseFloat(secondSet[2].split(' ')[0]) || (firstSet[2] !== 'N/A' && secondSet[2] === 'N/A')) {
+        if (
+            parseFloat(firstSet[2].split(' ')[0]) > parseFloat(secondSet[2].split(' ')[0]) ||
+            (firstSet[2] !== 'N/A' && secondSet[2] === 'N/A')
+        ) {
             firstSet[2] = [firstSet[2], 'green'];
             secondSet[2] = [secondSet[2], 'red'];
-        } else if (parseFloat(firstSet[2].split(' ')[0]) < parseFloat(secondSet[2].split(' ')[0]) || (firstSet[2] === 'N/A' && secondSet[2] !== 'N/A')) {
+        } else if (
+            parseFloat(firstSet[2].split(' ')[0]) < parseFloat(secondSet[2].split(' ')[0]) ||
+            (firstSet[2] === 'N/A' && secondSet[2] !== 'N/A')
+        ) {
             firstSet[2] = [firstSet[2], 'red'];
             secondSet[2] = [secondSet[2], 'green'];
         }
@@ -155,12 +173,55 @@ class JudgeCard extends StageComponent {
         if (parseInt(firstSet[4]) > parseInt(secondSet[4]) || (firstSet[4] !== 'N/A' && secondSet[4] === 'N/A')) {
             firstSet[4] = [firstSet[4], 'green'];
             secondSet[4] = [secondSet[4], 'red'];
-        } else if (parseInt(firstSet[4]) < parseInt(secondSet[4]) || (firstSet[4] === 'N/A' && secondSet[4] !== 'N/A')) {
+        } else if (
+            parseInt(firstSet[4]) < parseInt(secondSet[4]) ||
+            (firstSet[4] === 'N/A' && secondSet[4] !== 'N/A')
+        ) {
             firstSet[4] = [firstSet[4], 'red'];
             secondSet[4] = [secondSet[4], 'green'];
         }
         // return modified arrays
         return { firstSet, secondSet };
+    }
+
+    chooseWinner(firstSet, secondSet) {
+        const showTotals = [];
+        const firstShowName = document.querySelector('#first-card .show-title').innerHTML;
+        const secondShowName = document.querySelector('#second-card .show-title').innerHTML;
+        let firstShowCount = 0;
+        let secondShowCount = 0;
+
+        // tally wins for first show
+        firstSet.map((item) => {
+            if (Array.isArray(item)) {
+                if (item.includes('green')) {
+                    firstShowCount++;
+                }
+            }
+        });
+
+        // tally wins for second show
+        secondSet.map((item) => {
+            if (Array.isArray(item)) {
+                if (item.includes('green')) {
+                    secondShowCount++;
+                }
+            }
+        });
+
+        // add data to showTotals
+        showTotals.push(firstShowName);
+        showTotals.push(firstShowCount);
+        showTotals.push(secondShowName);
+        showTotals.push(secondShowCount);
+
+        if (showTotals[1] > showTotals[3]) {
+            return showTotals[0];
+        } else if (showTotals[1] < showTotals[3]) {
+            return showTotals[2];
+        } else if (showTotals[1] === showTotals[3]) {
+            return 'tie';
+        }
     }
 }
 

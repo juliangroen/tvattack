@@ -80,6 +80,7 @@ button:hover {
 .compare-container .versus {
     font-size: 2.5rem;
     font-weight: bold;
+    height: fit-content;
     padding: var(--spacing-small) 0;
     width: 20%;
 }
@@ -105,12 +106,12 @@ button:hover {
     width: 40%;
 }
 
-.compare-items .green {
-    background: var(--compare-green);
-    font-weight: bold;
+.green {
+    background: var(--compare-green) !important;
+    font-weight: bold !important;
 }
-.compare-items .red {
-    background: var(--compare-red);
+.red {
+    background: var(--compare-red) !important;
 }
 
 .judge-card {
@@ -301,4 +302,18 @@ button:hover {
 
 .svg-loader {
     margin: 0 auto;
+}
+
+.winner-container > .label {
+    font-size: 2.5rem;
+    letter-spacing: 0.2rem;
+    text-transform: uppercase;
+}
+
+.winner-container > .show {
+    background: var(--compare-green);
+    border-radius: var(--border-radius-normal);
+    font-size: 2rem;
+    margin: var(--spacing-normal);
+    padding: var(--spacing-normal);
 }
