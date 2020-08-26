@@ -1,5 +1,7 @@
 # TVAttack
 
+#### [View a live demo](https://modest-tesla-ff749d.netlify.app/)
+
 ### Simple web application pitting two TV-Shows in a fictional battle.
 
 Developed to explore state (data) management, composing reusable component classes, and consuming data via an API using vanilla JavaScript.
