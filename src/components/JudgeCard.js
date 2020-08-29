@@ -108,20 +108,19 @@ class JudgeCard extends StageComponent {
         });
 
         return /*html*/ `
+            <div class="toggle-icon" data-tooltip="toggle additional information">+</div>
             <div class="compare-container">
-                <div class="compare-items">
+                <div class="compare-items hidden">
                     ${firstSetElements.map((el) => el).join('')}
                 </div>
-                <div class="versus">VS</div>
-                <div class="compare-items">
+                <div class="versus hidden">VS</div>
+                <div class="compare-items hidden">
                     ${secondSetElements.map((el) => el).join('')}
                 </div>
             </div>
             <div class="winner-container">
                 <div class="label">${winner !== 'tie' ? 'Winner!' : ''}</div>
-                <div class="show ${winner !== 'tie' ? 'green' : 'red'}">${
-            winner !== 'tie' ? winner : 'No Contest!'
-        }</div>
+                <div class="show ${winner !== 'tie' ? 'green' : 'red'}">${winner !== 'tie' ? winner : 'No Contest!'}</div>
             </div>
         `;
 
@@ -146,25 +145,16 @@ class JudgeCard extends StageComponent {
         if (parseInt(firstSet[0]) > parseInt(secondSet[0]) || (firstSet[0] !== 'N/A' && secondSet[0] === 'N/A')) {
             firstSet[0] = [firstSet[0], 'green'];
             secondSet[0] = [secondSet[0], 'red'];
-        } else if (
-            parseInt(firstSet[0]) < parseInt(secondSet[0]) ||
-            (firstSet[0] === 'N/A' && secondSet[0] !== 'N/A')
-        ) {
+        } else if (parseInt(firstSet[0]) < parseInt(secondSet[0]) || (firstSet[0] === 'N/A' && secondSet[0] !== 'N/A')) {
             firstSet[0] = [firstSet[0], 'red'];
             secondSet[0] = [secondSet[0], 'green'];
         }
 
         // compare rating
-        if (
-            parseFloat(firstSet[2].split(' ')[0]) > parseFloat(secondSet[2].split(' ')[0]) ||
-            (firstSet[2] !== 'N/A' && secondSet[2] === 'N/A')
-        ) {
+        if (parseFloat(firstSet[2].split(' ')[0]) > parseFloat(secondSet[2].split(' ')[0]) || (firstSet[2] !== 'N/A' && secondSet[2] === 'N/A')) {
             firstSet[2] = [firstSet[2], 'green'];
             secondSet[2] = [secondSet[2], 'red'];
-        } else if (
-            parseFloat(firstSet[2].split(' ')[0]) < parseFloat(secondSet[2].split(' ')[0]) ||
-            (firstSet[2] === 'N/A' && secondSet[2] !== 'N/A')
-        ) {
+        } else if (parseFloat(firstSet[2].split(' ')[0]) < parseFloat(secondSet[2].split(' ')[0]) || (firstSet[2] === 'N/A' && secondSet[2] !== 'N/A')) {
             firstSet[2] = [firstSet[2], 'red'];
             secondSet[2] = [secondSet[2], 'green'];
         }
@@ -173,10 +163,7 @@ class JudgeCard extends StageComponent {
         if (parseInt(firstSet[4]) > parseInt(secondSet[4]) || (firstSet[4] !== 'N/A' && secondSet[4] === 'N/A')) {
             firstSet[4] = [firstSet[4], 'green'];
             secondSet[4] = [secondSet[4], 'red'];
-        } else if (
-            parseInt(firstSet[4]) < parseInt(secondSet[4]) ||
-            (firstSet[4] === 'N/A' && secondSet[4] !== 'N/A')
-        ) {
+        } else if (parseInt(firstSet[4]) < parseInt(secondSet[4]) || (firstSet[4] === 'N/A' && secondSet[4] !== 'N/A')) {
             firstSet[4] = [firstSet[4], 'red'];
             secondSet[4] = [secondSet[4], 'green'];
         }
@@ -221,6 +208,28 @@ class JudgeCard extends StageComponent {
             return showTotals[2];
         } else if (showTotals[1] === showTotals[3]) {
             return 'tie';
+        }
+    }
+
+    bindEvents() {
+        const elements = document.querySelector(`#${this.selector}`);
+        const toggleIcon = elements.querySelector('.toggle-icon');
+        const itemContainers = elements.querySelectorAll('.compare-items');
+        const versus = elements.querySelector('.versus');
+
+        if (toggleIcon) {
+            toggleIcon.addEventListener('click', (e) => {
+                e.preventDefault();
+                if (toggleIcon.innerHTML === '+') {
+                    toggleIcon.innerHTML = '-';
+                } else {
+                    toggleIcon.innerHTML = '+';
+                }
+                Array.from(itemContainers).map((div) => {
+                    div.classList.toggle('hidden');
+                });
+                versus.classList.toggle('hidden');
+            });
         }
     }
 }

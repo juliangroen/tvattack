@@ -24,7 +24,7 @@
     --spacing-normal: 1.6rem;
     --spacing-small: 0.8rem;
 
-    --card-width: 40rem;
+    --card-width: 38rem;
 }
 
 * {
@@ -94,9 +94,6 @@ button:hover {
     flex-direction: row;
     height: 100%;
     width: 100%;
-}
-
-.compare-container > div {
 }
 
 .compare-container .versus {
@@ -219,11 +216,15 @@ button:hover {
     width: var(--card-width);
 }
 
+.toggle-icon {
+    display: none;
+}
+
 .show-genres-list {
     align-content: center;
     display: flex;
     flex-wrap: wrap;
-    height: 6rem;
+    min-height: 6rem;
     margin-bottom: var(--spacing-small);
     width: 50%;
 }
@@ -344,4 +345,149 @@ button:hover {
     font-size: var(--font-size-large);
     margin: var(--spacing-normal);
     padding: var(--spacing-normal);
+}
+
+@media screen and (max-width: 1280px) {
+    body {
+        align-items: center;
+        flex-direction: column;
+        justify-content: center;
+        padding: var(--spacing-small);
+    }
+
+    .compare-container {
+        flex-direction: column;
+        /* margin-top: calc(var(--spacing-normal) * 3); */
+    }
+
+    .compare-container .versus {
+        margin: 0 auto;
+        margin-bottom: var(--spacing-normal);
+    }
+
+    .compare-items {
+        align-items: center;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        margin-bottom: var(--spacing-normal);
+        width: 100%;
+    }
+
+    .compare-items:first-child {
+        margin-top: calc(var(--spacing-normal) * 3);
+    }
+
+    .compare-items:last-child {
+        margin-bottom: calc(var(--spacing-normal) * 2);
+    }
+
+    .compare-item-content {
+        margin: var(--spacing-small);
+        width: 16rem;
+    }
+
+    .hidden {
+        display: none;
+    }
+
+    .judge-card {
+        margin: unset;
+        margin-bottom: var(--spacing-small);
+        position: relative;
+    }
+
+    .main {
+        margin: unset;
+        margin-bottom: var(--spacing-small);
+        width: var(--card-width);
+    }
+
+    .main > div {
+        font-size: var(--font-size-large);
+        width: var(--card-width);
+    }
+
+    .show-card {
+        margin: unset;
+        margin-bottom: var(--spacing-small);
+        position: relative;
+    }
+
+    .show-poster-container {
+        height: 24rem;
+        width: 16rem;
+    }
+
+    .show-misc-image-container {
+        height: auto;
+        overflow-y: unset;
+    }
+
+    .show-search {
+        font-size: var(--font-size-large);
+        height: 4rem;
+    }
+
+    .show-search-button {
+        height: 4rem;
+    }
+
+    .show-title {
+        width: 86%;
+    }
+
+    .toggle-icon {
+        background: var(--main-primary-color);
+        border-radius: var(--border-radius-normal);
+        cursor: pointer;
+        display: unset;
+        font-size: var(--font-size-xl);
+        font-weight: bold;
+        margin: var(--spacing-normal);
+        text-align: center;
+        width: 4rem;
+        position: absolute;
+        top: 0;
+        right: 0;
+    }
+
+    .toggle-icon:hover:after {
+        background: var(--card-item-bg-color);
+        content: attr(data-tooltip);
+        font-size: var(--font-size-normal);
+        font-weight: normal;
+        padding: var(--spacing-small);
+        white-space: nowrap;
+        position: absolute;
+        left: -8rem;
+        top: -4rem;
+    }
+
+    .winner-container > .show {
+        font-size: var(--font-size-large);
+        padding: var(--spacing-small);
+    }
+}
+
+@media screen and (min-width: 769px) and (max-width: 1280px) {
+    .main {
+        max-width: 64rem;
+        width: 100%;
+    }
+
+    .main > div {
+        width: 100%;
+    }
+
+    .judge-card {
+        max-width: 64rem;
+        width: 100%;
+    }
+
+    .show-card {
+        max-width: 64rem;
+        width: 100%;
+    }
 }

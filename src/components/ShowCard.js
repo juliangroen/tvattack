@@ -105,11 +105,12 @@ class ShowCard extends StageComponent {
             <div class="show-header">
                 <div class="show-title">${name ? name : `N/A`}</div>
                 <div class="show-network">${`${networkName ? networkName : ``} - ${networkCountry ? networkCountry : ``}`}</div>
+                <div class="toggle-icon" data-tooltip="toggle additional information">+</div>
             </div>
-            <div class="show-poster-container">
+            <div class="show-poster-container hidden">
                 <img src="${poster ? poster : `${this.placeholderUrl(256, 384, 'No Poster Available')}`}" class="show-poster" />
             </div>
-            <div class="show-item-container">
+            <div class="show-item-container hidden">
                 <div class="show-item-label">Year: </div>
                 <div class="show-item">${year ? year : `N/A`}</div>
                 <div class="show-item-label">Type: </div>
@@ -125,7 +126,7 @@ class ShowCard extends StageComponent {
                 <div class="show-item-label">Episode Count: </div>
                 <div class="show-item">${episodes.length}</div>
             </div>
-            <div class="show-misc-image-container">
+            <div class="show-misc-image-container hidden">
                 ${imagesArray
                     .map(
                         (url) => /*html*/ `
@@ -197,6 +198,8 @@ class ShowCard extends StageComponent {
         const showSearchButton = elements.querySelector('.show-search-button');
         const newShowButton = elements.querySelector('.new-search-button');
         const allSearchLinks = elements.querySelectorAll('.search-results-link');
+        const toggleIcon = elements.querySelector('.toggle-icon');
+        const allDivs = elements.querySelectorAll(':scope > div');
 
         if (showSearchButton) {
             showSearchButton.addEventListener('click', (e) => {
@@ -222,6 +225,22 @@ class ShowCard extends StageComponent {
                 const anchor = e.target.closest('.search-results-link');
                 const id = anchor.dataset.id;
                 this.getShowData(id);
+            });
+        }
+
+        if (toggleIcon) {
+            toggleIcon.addEventListener('click', (e) => {
+                e.preventDefault();
+                if (toggleIcon.innerHTML === '+') {
+                    toggleIcon.innerHTML = '-';
+                } else {
+                    toggleIcon.innerHTML = '+';
+                }
+                Array.from(allDivs).map((div) => {
+                    if (!div.classList.contains('show-header')) {
+                        div.classList.toggle('hidden');
+                    }
+                });
             });
         }
     }
