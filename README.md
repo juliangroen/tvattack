@@ -1,6 +1,6 @@
 # TVAttack
 
-#### [View a live demo](https://modest-tesla-ff749d.netlify.app/)
+#### [View a live demo](https://tv.bytegeist.dev/)
 
 ### Simple web application pitting two TV-Shows in a fictional battle.
 
